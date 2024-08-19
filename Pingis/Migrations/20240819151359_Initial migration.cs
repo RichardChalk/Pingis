@@ -19,7 +19,6 @@ namespace Pingis.Migrations
                     Player1Score = table.Column<int>(type: "int", nullable: false),
                     Player2Score = table.Column<int>(type: "int", nullable: false),
                     IsPlayer1Serve = table.Column<bool>(type: "bit", nullable: false),
-                    CurrentServe = table.Column<int>(type: "int", nullable: false),
                     ServeCounter = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

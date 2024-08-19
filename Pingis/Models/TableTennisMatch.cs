@@ -6,20 +6,19 @@
         public int Player1Score { get; set; }
         public int Player2Score { get; set; }
         public bool IsPlayer1Serve { get; set; } = true;
-        public int CurrentServe { get; set; }
         public int ServeCounter { get; set; } = 0;
 
 
         public void AddPointToPlayer1()
         {
             Player1Score++;
-            //CheckEndOfSet();
+            CheckEndOfSet();
         }
 
         public void AddPointToPlayer2()
         {
             Player2Score++;
-            //CheckEndOfSet();
+            CheckEndOfSet();
         }
 
         public void CheckEndOfSet()

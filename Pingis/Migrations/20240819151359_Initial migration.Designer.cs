@@ -11,7 +11,7 @@ using Pingis.Models;
 namespace Pingis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240819150845_Initial migration")]
+    [Migration("20240819151359_Initial migration")]
     partial class Initialmigration
     {
         /// <inheritdoc />
@@ -31,9 +31,6 @@ namespace Pingis.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CurrentServe")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsPlayer1Serve")
                         .HasColumnType("bit");

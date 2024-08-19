@@ -29,9 +29,6 @@ namespace Pingis.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CurrentServe")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsPlayer1Serve")
                         .HasColumnType("bit");
 
