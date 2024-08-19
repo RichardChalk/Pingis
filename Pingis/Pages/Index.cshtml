@@ -1,0 +1,26 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h2>Table Tennis Scoreboard</h2>
+
+<form method="post">
+
+    <div>
+        <p>Player 1 Score: @Model.Match.Player1Score</p>
+        <p>Player 2 Score: @Model.Match.Player2Score</p>
+        <p>Current Server: @(Model.Match.IsPlayer1Serve ? "Player 1" : "Player 2")</p>
+    </div>
+
+    <input type="hidden" asp-for="Match.Player1Score" />
+    <input type="hidden" asp-for="Match.Player2Score" />
+    <input type="hidden" asp-for="Match.IsPlayer1Serve" />
+
+
+    <div>
+        <button asp-page-handler="AddPointToPlayer1">Add Point to Player 1</button>
+        <button asp-page-handler="AddPointToPlayer2">Add Point to Player 2</button>
+    </div>
+</form>
