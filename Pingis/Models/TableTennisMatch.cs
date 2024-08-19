@@ -6,9 +6,9 @@
         public int Player1Score { get; set; }
         public int Player2Score { get; set; }
         public bool IsPlayer1Serve { get; set; } = true;
-        public int? Player3Score { get; set; } // För dubbelspel
-        public int? Player4Score { get; set; } // För dubbelspel
         public int CurrentServe { get; set; }
+        public int ServeCounter { get; set; } = 0;
+
 
         public void AddPointToPlayer1()
         {
@@ -28,13 +28,20 @@
             {
                 // Markera set som över och hantera logik
             }
-            UpdateServe();
+            // UpdateServe();
         }
 
         public void UpdateServe()
         {
-            // Logik för att hantera vem som servar, baserat på poängen
+            // Öka ServeCounter varje gång en poäng läggs till
+            ServeCounter++;
+
+            // När ServeCounter når 2, växla servern och nollställ räknaren
+            if (ServeCounter >= 2)
+            {
+                IsPlayer1Serve = !IsPlayer1Serve; // Växla servern
+                ServeCounter = 0; // Nollställ räknaren
+            }
         }
     }
-
 }

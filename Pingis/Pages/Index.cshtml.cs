@@ -15,7 +15,6 @@ namespace Pingis.Pages
             _dbContext = dbContext;
         }
 
-
         public List<TableTennisMatch> Matches { get; set; }
 
 
@@ -36,8 +35,10 @@ namespace Pingis.Pages
         {
             var MatchToUpdate = _dbContext.Matches.Find(CurrentMatch.Id);
             MatchToUpdate.AddPointToPlayer1();
-            CurrentMatch = MatchToUpdate;
+            MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
+
+            CurrentMatch = MatchToUpdate;
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
 
@@ -45,8 +46,10 @@ namespace Pingis.Pages
         {
             var MatchToUpdate = _dbContext.Matches.Find(CurrentMatch.Id);
             MatchToUpdate.AddPointToPlayer2();
-            CurrentMatch = MatchToUpdate;
+            MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
+
+            CurrentMatch = MatchToUpdate;
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
     }
