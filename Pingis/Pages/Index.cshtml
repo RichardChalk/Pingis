@@ -7,17 +7,14 @@
 <h2>Table Tennis Scoreboard</h2>
 
 <form method="post">
+    <input type="hidden" asp-for="CurrentMatch.Id" />
 
     <div>
-        <p>Player 1 Score: @Model.Match.Player1Score</p>
-        <p>Player 2 Score: @Model.Match.Player2Score</p>
-        <p>Current Server: @(Model.Match.IsPlayer1Serve ? "Player 1" : "Player 2")</p>
+        <p>Match Id: @Model.CurrentMatch.Id</p>
+        <p>Player 1 Score: @Model.CurrentMatch.Player1Score</p>
+        <p>Player 2 Score: @Model.CurrentMatch.Player2Score</p>
+        <p>Current Server: @(Model.CurrentMatch.IsPlayer1Serve ? "Player 1" : "Player 2")</p>
     </div>
-
-    <input type="hidden" asp-for="Match.Player1Score" />
-    <input type="hidden" asp-for="Match.Player2Score" />
-    <input type="hidden" asp-for="Match.IsPlayer1Serve" />
-
 
     <div>
         <button asp-page-handler="AddPointToPlayer1">Add Point to Player 1</button>

@@ -2,6 +2,7 @@
 {
     public class TableTennisMatch
     {
+        public int Id { get; set; }
         public int Player1Score { get; set; }
         public int Player2Score { get; set; }
         public bool IsPlayer1Serve { get; set; } = true;
