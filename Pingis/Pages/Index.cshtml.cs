@@ -15,11 +15,12 @@ namespace Pingis.Pages
             _dbContext = dbContext;
         }
 
-        public List<TableTennisSet> Matches { get; set; }
+        public List<TableTennisSet> Sets { get; set; }
 
 
         [BindProperty]
         public TableTennisSet CurrentSet { get; set; }
+        public TableTennisSet DatabaseSet { get; set; }
 
         [BindProperty]
         public string Winner { get; set; }
@@ -30,54 +31,59 @@ namespace Pingis.Pages
             if (CurrentSet == null)
                 CurrentSet = new TableTennisSet();
 
-            _dbContext.Matches.Add(CurrentSet);
+            _dbContext.Sets.Add(CurrentSet);
             _dbContext.SaveChanges();
         }
 
         public IActionResult OnPostAddPointToPlayer1()
         {
-            var MatchToUpdate = _dbContext.Matches.Find(CurrentSet.Id);
-            MatchToUpdate.AddPointToPlayer1();
-            Winner = MatchToUpdate.CheckEndOfSet();
-            MatchToUpdate.UpdateServe();
-            _dbContext.SaveChanges();
+            DatabaseSet = _dbContext.Sets.Find(CurrentSet.Id);
+            DatabaseSet.AddPointToPlayer1();
 
-            CurrentSet = MatchToUpdate;
+            UpdateGame();
 
-            if (!string.IsNullOrEmpty(Winner))
-            {
-                // Rensa ModelState för att undvika att gamla värden återkommer
-                ModelState.Clear();
-                Winner = null;
-
-                CurrentSet = new TableTennisSet();
-                _dbContext.Matches.Add(CurrentSet);
-                _dbContext.SaveChanges();
-            }
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
+            
 
         public IActionResult OnPostAddPointToPlayer2()
         {
-            var MatchToUpdate = _dbContext.Matches.Find(CurrentSet.Id);
-            MatchToUpdate.AddPointToPlayer2();
-            Winner = MatchToUpdate.CheckEndOfSet();
-            MatchToUpdate.UpdateServe();
+            DatabaseSet = _dbContext.Sets.Find(CurrentSet.Id);
+            DatabaseSet.AddPointToPlayer2();
+
+            UpdateGame();
+
+            return Page(); // Returnerar samma sida för att uppdatera visningen
+        }
+
+        private void StartNewSet()
+        {
+            // Rensa ModelState för att undvika att gamla värden återkommer
+            ModelState.Clear();
+
+            // Skapa ett nytt set och lägg till det i databasen
+            CurrentSet = new TableTennisSet();
+            _dbContext.Sets.Add(CurrentSet);
             _dbContext.SaveChanges();
 
-            CurrentSet = MatchToUpdate;
+            // Återställ Winner till null för nästa omgång
+            Winner = null;
+        }
+
+        private void UpdateGame()
+        {
+            Winner = DatabaseSet.CheckEndOfSet();
+            DatabaseSet.UpdateServe();
+            _dbContext.SaveChanges();
 
             if (!string.IsNullOrEmpty(Winner))
             {
-                // Rensa ModelState för att undvika att gamla värden återkommer
-                ModelState.Clear();
-                Winner = null;
-
-                CurrentSet = new TableTennisSet();
-                _dbContext.Matches.Add(CurrentSet);
-                _dbContext.SaveChanges();
+                StartNewSet();
             }
-            return Page(); // Returnerar samma sida för att uppdatera visningen
+            else
+            {
+                CurrentSet = DatabaseSet;
+            }
         }
     }
 }

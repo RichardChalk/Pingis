@@ -21,7 +21,7 @@ namespace Pingis.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Pingis.Models.TableTennisMatch", b =>
+            modelBuilder.Entity("Pingis.Models.TableTennisSet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace Pingis.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Matches");
+                    b.ToTable("Sets");
                 });
 #pragma warning restore 612, 618
         }

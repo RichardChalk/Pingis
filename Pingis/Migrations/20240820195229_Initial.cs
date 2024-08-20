@@ -5,13 +5,13 @@
 namespace Pingis.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialmigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Matches",
+                name: "Sets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,7 @@ namespace Pingis.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Matches", x => x.Id);
+                    table.PrimaryKey("PK_Sets", x => x.Id);
                 });
         }
 
@@ -31,7 +31,7 @@ namespace Pingis.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Matches");
+                name: "Sets");
         }
     }
 }
