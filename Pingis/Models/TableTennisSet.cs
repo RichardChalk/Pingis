@@ -1,6 +1,6 @@
 ﻿namespace Pingis.Models
 {
-    public class TableTennisMatch
+    public class TableTennisSet
     {
         public int Id { get; set; }
         public int Player1Score { get; set; }

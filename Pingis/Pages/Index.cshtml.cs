@@ -15,11 +15,11 @@ namespace Pingis.Pages
             _dbContext = dbContext;
         }
 
-        public List<TableTennisMatch> Matches { get; set; }
+        public List<TableTennisSet> Matches { get; set; }
 
 
         [BindProperty]
-        public TableTennisMatch CurrentMatch { get; set; }
+        public TableTennisSet CurrentMatch { get; set; }
 
         [BindProperty]
         public string Winner { get; set; }
@@ -28,7 +28,7 @@ namespace Pingis.Pages
         {
             // Initialiserar en ny match om det är första gången sidan besöks
             if (CurrentMatch == null)
-                CurrentMatch = new TableTennisMatch();
+                CurrentMatch = new TableTennisSet();
 
             _dbContext.Matches.Add(CurrentMatch);
             _dbContext.SaveChanges();

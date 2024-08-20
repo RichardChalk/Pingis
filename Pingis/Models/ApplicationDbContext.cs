@@ -9,7 +9,7 @@ namespace Pingis.Models
         {
         }
 
-        public DbSet<TableTennisMatch> Matches { get; set; }
+        public DbSet<TableTennisSet> Matches { get; set; }
     }
 
 }
