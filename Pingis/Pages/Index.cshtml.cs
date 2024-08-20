@@ -34,7 +34,7 @@ namespace Pingis.Pages
             _dbContext.SaveChanges();
         }
 
-        public IActionResult OnPostAddPointToPlayer1(int Id)
+        public IActionResult OnPostAddPointToPlayer1()
         {
             var MatchToUpdate = _dbContext.Matches.Find(CurrentSet.Id);
             MatchToUpdate.AddPointToPlayer1();
@@ -42,16 +42,22 @@ namespace Pingis.Pages
             MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
 
-            if (Winner != null)
-            {
-                // ResetSet();
-            }
-
             CurrentSet = MatchToUpdate;
+
+            if (!string.IsNullOrEmpty(Winner))
+            {
+                // Rensa ModelState för att undvika att gamla värden återkommer
+                ModelState.Clear();
+                Winner = null;
+
+                CurrentSet = new TableTennisSet();
+                _dbContext.Matches.Add(CurrentSet);
+                _dbContext.SaveChanges();
+            }
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
 
-        public IActionResult OnPostAddPointToPlayer2(int Id)
+        public IActionResult OnPostAddPointToPlayer2()
         {
             var MatchToUpdate = _dbContext.Matches.Find(CurrentSet.Id);
             MatchToUpdate.AddPointToPlayer2();
@@ -60,6 +66,17 @@ namespace Pingis.Pages
             _dbContext.SaveChanges();
 
             CurrentSet = MatchToUpdate;
+
+            if (!string.IsNullOrEmpty(Winner))
+            {
+                // Rensa ModelState för att undvika att gamla värden återkommer
+                ModelState.Clear();
+                Winner = null;
+
+                CurrentSet = new TableTennisSet();
+                _dbContext.Matches.Add(CurrentSet);
+                _dbContext.SaveChanges();
+            }
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
     }
