@@ -21,6 +21,9 @@ namespace Pingis.Pages
         [BindProperty]
         public TableTennisMatch CurrentMatch { get; set; }
 
+        [BindProperty]
+        public string Winner { get; set; }
+
         public void OnGet()
         {
             // Initialiserar en ny match om det är första gången sidan besöks
@@ -35,6 +38,7 @@ namespace Pingis.Pages
         {
             var MatchToUpdate = _dbContext.Matches.Find(CurrentMatch.Id);
             MatchToUpdate.AddPointToPlayer1();
+            Winner = MatchToUpdate.CheckEndOfSet();
             MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
 
@@ -46,6 +50,7 @@ namespace Pingis.Pages
         {
             var MatchToUpdate = _dbContext.Matches.Find(CurrentMatch.Id);
             MatchToUpdate.AddPointToPlayer2();
+            Winner = MatchToUpdate.CheckEndOfSet();
             MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
 

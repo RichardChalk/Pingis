@@ -16,6 +16,14 @@
         <p>Current Server: @(Model.CurrentMatch.IsPlayer1Serve ? "Player 1" : "Player 2")</p>
     </div>
 
+    @if (Model.Winner == "Player1")
+    {
+        <div>Winner is @Model.Winner</div>
+    }
+    @if (Model.Winner == "Player2")
+    {
+        <div>Winner is @Model.Winner</div>
+    }
     <div>
         <button asp-page-handler="AddPointToPlayer1">Add Point to Player 1</button>
         <button asp-page-handler="AddPointToPlayer2">Add Point to Player 2</button>

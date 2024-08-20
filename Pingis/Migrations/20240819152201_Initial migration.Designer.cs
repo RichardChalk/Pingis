@@ -11,7 +11,7 @@ using Pingis.Models;
 namespace Pingis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240819151359_Initial migration")]
+    [Migration("20240819152201_Initial migration")]
     partial class Initialmigration
     {
         /// <inheritdoc />

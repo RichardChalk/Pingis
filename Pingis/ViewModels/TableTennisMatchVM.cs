@@ -1,8 +1,7 @@
-﻿namespace Pingis.Models
+﻿namespace Pingis.ViewModels
 {
-    public class TableTennisMatch
+    public class TableTennisMatchVM
     {
-        public int Id { get; set; }
         public int Player1Score { get; set; }
         public int Player2Score { get; set; }
         public bool IsPlayer1Serve { get; set; } = true;
@@ -20,18 +19,13 @@
             CheckEndOfSet();
         }
 
-        public string CheckEndOfSet()
+        public void CheckEndOfSet()
         {
-            if (Player1Score >= 11 && Math.Abs(Player1Score - Player2Score) >= 2)
+            if ((Player1Score >= 11 || Player2Score >= 11) && Math.Abs(Player1Score - Player2Score) >= 2)
             {
                 // Markera set som över och hantera logik
-                return "Player1";
             }
-            if ((Player2Score >= 11) && Math.Abs(Player1Score - Player2Score) >= 2)
-            {
-                return "Player2";
-            }
-            return "Game in progress";
+            // UpdateServe();
         }
 
         public void UpdateServe()
@@ -46,5 +40,6 @@
                 ServeCounter = 0; // Nollställ räknaren
             }
         }
+
     }
 }
