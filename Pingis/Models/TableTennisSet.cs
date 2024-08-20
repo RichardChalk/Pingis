@@ -37,7 +37,7 @@
                     }
                 }
             }
-            return "Game in progress";
+            return null;
         }
 
         public void UpdateServe()

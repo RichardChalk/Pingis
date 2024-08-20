@@ -19,7 +19,7 @@ namespace Pingis.Pages
 
 
         [BindProperty]
-        public TableTennisSet CurrentMatch { get; set; }
+        public TableTennisSet CurrentSet { get; set; }
 
         [BindProperty]
         public string Winner { get; set; }
@@ -27,34 +27,39 @@ namespace Pingis.Pages
         public void OnGet()
         {
             // Initialiserar en ny match om det är första gången sidan besöks
-            if (CurrentMatch == null)
-                CurrentMatch = new TableTennisSet();
+            if (CurrentSet == null)
+                CurrentSet = new TableTennisSet();
 
-            _dbContext.Matches.Add(CurrentMatch);
+            _dbContext.Matches.Add(CurrentSet);
             _dbContext.SaveChanges();
         }
 
         public IActionResult OnPostAddPointToPlayer1(int Id)
         {
-            var MatchToUpdate = _dbContext.Matches.Find(CurrentMatch.Id);
+            var MatchToUpdate = _dbContext.Matches.Find(CurrentSet.Id);
             MatchToUpdate.AddPointToPlayer1();
             Winner = MatchToUpdate.CheckEndOfSet();
             MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
 
-            CurrentMatch = MatchToUpdate;
+            if (Winner != null)
+            {
+                // ResetSet();
+            }
+
+            CurrentSet = MatchToUpdate;
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
 
         public IActionResult OnPostAddPointToPlayer2(int Id)
         {
-            var MatchToUpdate = _dbContext.Matches.Find(CurrentMatch.Id);
+            var MatchToUpdate = _dbContext.Matches.Find(CurrentSet.Id);
             MatchToUpdate.AddPointToPlayer2();
             Winner = MatchToUpdate.CheckEndOfSet();
             MatchToUpdate.UpdateServe();
             _dbContext.SaveChanges();
 
-            CurrentMatch = MatchToUpdate;
+            CurrentSet = MatchToUpdate;
             return Page(); // Returnerar samma sida för att uppdatera visningen
         }
     }
