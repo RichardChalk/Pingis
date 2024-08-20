@@ -22,14 +22,20 @@
 
         public string CheckEndOfSet()
         {
-            if (Player1Score >= 11 && Math.Abs(Player1Score - Player2Score) >= 2)
+            if (Player1Score >= 11 || Player2Score >= 11)
             {
-                // Markera set som över och hantera logik
-                return "Player1";
-            }
-            if ((Player2Score >= 11) && Math.Abs(Player1Score - Player2Score) >= 2)
-            {
-                return "Player2";
+                if (Math.Abs(Player1Score - Player2Score) >= 2)
+                {
+                    // Kontrollera vem som har flest poäng för att avgöra vinnaren
+                    if (Player1Score > Player2Score)
+                    {
+                        return "Player1";
+                    }
+                    else
+                    {
+                        return "Player2";
+                    }
+                }
             }
             return "Game in progress";
         }
