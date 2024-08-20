@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Pingis.Models;
-using System.Net;
 
 namespace Pingis.Pages
 {
@@ -17,7 +16,6 @@ namespace Pingis.Pages
 
         public List<TableTennisSet> Sets { get; set; }
 
-
         [BindProperty]
         public TableTennisSet CurrentSet { get; set; }
         public TableTennisSet DatabaseSet { get; set; }
@@ -27,12 +25,11 @@ namespace Pingis.Pages
 
         public void OnGet()
         {
-            // Initialiserar en ny match om det är första gången sidan besöks
+            // Initialisera en ny match om det är första gången sidan besöks
             if (CurrentSet == null)
-                CurrentSet = new TableTennisSet();
-
-            _dbContext.Sets.Add(CurrentSet);
-            _dbContext.SaveChanges();
+            {
+                StartNewSet();
+            }
         }
 
         public IActionResult OnPostAddPointToPlayer1()
@@ -41,10 +38,8 @@ namespace Pingis.Pages
             DatabaseSet.AddPointToPlayer1();
 
             UpdateGame();
-
-            return Page(); // Returnerar samma sida för att uppdatera visningen
+            return Page();
         }
-            
 
         public IActionResult OnPostAddPointToPlayer2()
         {
@@ -52,8 +47,13 @@ namespace Pingis.Pages
             DatabaseSet.AddPointToPlayer2();
 
             UpdateGame();
+            return Page();
+        }
 
-            return Page(); // Returnerar samma sida för att uppdatera visningen
+        public IActionResult OnPostStartNewGame()
+        {
+            StartNewSet();
+            return Page();
         }
 
         private void StartNewSet()
@@ -78,7 +78,7 @@ namespace Pingis.Pages
 
             if (!string.IsNullOrEmpty(Winner))
             {
-                StartNewSet();
+                // Stoppa spelet och vänta på att användaren startar ett nytt spel manuellt
             }
             else
             {

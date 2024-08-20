@@ -6,26 +6,32 @@
 
 <h2>Table Tennis Scoreboard</h2>
 
-<form method="post">
-    <input type="hidden" asp-for="CurrentSet.Id" />
+@if (string.IsNullOrEmpty(Model.Winner))
+{
+    <form method="post">
+        <input type="hidden" asp-for="CurrentSet.Id" />
 
-    <div>
-        <p>Match Id: @Model.CurrentSet.Id</p>
-        <p>Player 1 Score: @Model.CurrentSet.Player1Score</p>
-        <p>Player 2 Score: @Model.CurrentSet.Player2Score</p>
-        <p>Current Server: @(Model.CurrentSet.IsPlayer1Serve ? "Player 1" : "Player 2")</p>
-    </div>
+        <div>
+            <p>Match Id: @Model.CurrentSet.Id</p>
+            <p>Player 1 Score: @Model.CurrentSet.Player1Score</p>
+            <p>Player 2 Score: @Model.CurrentSet.Player2Score</p>
+            <p>Current Server: @(Model.CurrentSet.IsPlayer1Serve ? "Player 1" : "Player 2")</p>
+        </div>
 
-    @if (Model.Winner == "Player1")
-    {
-        <div>Winner is @Model.Winner</div>
-    }
-    @if (Model.Winner == "Player2")
-    {
-        <div>Winner is @Model.Winner</div>
-    }
+        <div>
+            <button asp-page-handler="AddPointToPlayer1">Add Point to Player 1</button>
+            <button asp-page-handler="AddPointToPlayer2">Add Point to Player 2</button>
+        </div>
+    </form>
+}
+
+@*If the game has been won!*@
+else
+{
     <div>
-        <button asp-page-handler="AddPointToPlayer1">Add Point to Player 1</button>
-        <button asp-page-handler="AddPointToPlayer2">Add Point to Player 2</button>
+        <h3>Winner is @Model.Winner!</h3>
+        <form method="post">
+            <button asp-page-handler="StartNewGame">Start New Game</button>
+        </form>
     </div>
-</form>
+}
